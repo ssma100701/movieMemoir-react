@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from './axios';
+import axios from './apis/axios';
 import { MovieTable } from './MovieTable';
 
 const Home = props => {
@@ -21,7 +21,7 @@ const Home = props => {
 
   return (
     <div>
-      <h1 style={{ marginTop: '20px' }}>Welcome to Movie Memoir</h1>
+      <h1>Welcome to Movie Memoir</h1>
       <h3 className='ui right aligned header'>
         Today is {year}-{month}-{date}
       </h3>

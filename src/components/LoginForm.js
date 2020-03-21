@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import history from '../history';
-import axios from './axios';
+import axios from './apis/axios';
 
 const LoginForm = () => {
   const [errorMessage, setErrorMessage] = useState(false);
@@ -16,7 +16,7 @@ const LoginForm = () => {
     try {
       const response = await axios.get(`/users/${username}/${password}`);
       console.log(response);
-      history.push({ pathname: '/', state: { user: response.data } });
+      history.push({ pathname: '/home', state: { user: response.data } });
     } catch (err) {
       setErrorMessage(err.response.data.message);
       console.error(err.response.data.message);
