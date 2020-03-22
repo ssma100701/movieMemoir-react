@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 // import axios from 'axios';
 import MovieList from './MovieList';
-import moviedb from './apis/moviedb';
+import moviedb from '../apis/moviedb';
 
 const MovieSearch = () => {
   const [searchText, setSearchText] = useState();

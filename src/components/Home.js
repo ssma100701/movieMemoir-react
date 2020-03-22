@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import axios from './apis/axios';
+import axios from '../apis/axios';
 import { MovieTable } from './MovieTable';
+import { userContext } from '../userContext';
 
 const Home = props => {
   const [movies, setMovies] = useState('');
@@ -10,6 +11,7 @@ const Home = props => {
   const year = newDate.getFullYear();
 
   useEffect(() => {
+    console.log(props);
     const fetchMovies = async id => {
       const response = await axios.get(`/users/${id}`);
       console.log(response);

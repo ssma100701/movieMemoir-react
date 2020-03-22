@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import history from '../history';
-import axios from './apis/axios';
+import axios from '../apis/axios';
 
-const LoginForm = () => {
+const LoginForm = props => {
   const [errorMessage, setErrorMessage] = useState(false);
 
   const handleLogin = async event => {
