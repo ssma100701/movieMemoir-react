@@ -1,24 +1,47 @@
 import React, { useState } from 'react';
 import history from '../history';
 import axios from '../apis/axios';
+import { AuthContext } from './Main';
 
-const LoginForm = props => {
-  const [errorMessage, setErrorMessage] = useState(false);
+const LoginForm = (props) => {
+  const { dispatch } = React.useContext(AuthContext);
+  const initialState = {
+    email: '',
+    password: '',
+    errorMessage: false,
+  };
 
-  const handleLogin = async event => {
+  const [data, setData] = React.useState(initialState);
+
+  const handleChange = (event) => {
+    setData({
+      ...data,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleLogin = async (event) => {
     event.preventDefault();
-    const username = event.target.username.value;
-    const password = event.target.password.value;
-    if (!username || !password) {
-      setErrorMessage('invalid username or password');
+    if (!data.email || !data.password) {
+      setData({
+        ...data,
+        errorMessage: 'invalid email or password',
+      });
       return;
     }
     try {
-      const response = await axios.get(`/users/${username}/${password}`);
+      const response = await axios.get(`/users/${data.email}/${data.password}`);
       console.log(response);
-      history.push({ pathname: '/home', state: { user: response.data } });
+      dispatch({
+        type: 'LOGIN',
+        payload: response.data,
+      });
+      history.push({ pathname: '/home' });
     } catch (err) {
-      setErrorMessage(err.response.data.message);
+      setData({
+        ...data,
+        errorMessage: err.response.data.message,
+      });
       console.error(err.response.data.message);
     }
   };
@@ -37,13 +60,23 @@ const LoginForm = props => {
             <div className='field'>
               <div className='ui left icon input'>
                 <i className='user icon'></i>
-                <input type='text' name='username' placeholder='Username' />
+                <input
+                  type='email'
+                  name='email'
+                  placeholder='Email'
+                  onChange={handleChange}
+                />
               </div>
             </div>
             <div className='field'>
               <div className='ui left icon input'>
                 <i className='lock icon'></i>
-                <input type='password' name='password' placeholder='Password' />
+                <input
+                  type='password'
+                  name='password'
+                  placeholder='Password'
+                  onChange={handleChange}
+                />
               </div>
             </div>
             <button className='ui fluid large blue submit button' type='submit'>
@@ -53,13 +86,13 @@ const LoginForm = props => {
 
           <div
             className='ui error message'
-            style={{ display: errorMessage ? 'block' : 'none' }}>
-            {errorMessage}
+            style={{ display: data.errorMessage ? 'block' : 'none' }}>
+            {data.errorMessage}
           </div>
         </form>
 
         <div className='ui message'>
-          New to us? <a href='\'>Sign Up</a>
+          New to us? <a href='\'>Sign Up!!!!!!!!</a>
         </div>
       </div>
     </div>
